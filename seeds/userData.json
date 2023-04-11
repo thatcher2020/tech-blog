@@ -1,0 +1,13 @@
+[
+  {
+    "username" : "admin",
+    "password" : "admin",
+    "email" : "admin@localhost"
+  },
+
+  {
+    "username" : "thatcher20",
+    "password" : "YouWillNeverGuess2020",
+    "email" :"thatcherjoe20@gmail.com"
+  }
+]
