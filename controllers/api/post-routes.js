@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { Post } = require('../../models');
+const { Post } = require('../../models/seed');
 const withAuth = require('../../utils/auth');
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findAll({
       include: [
@@ -45,6 +45,28 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
+router.put('/:id', withAuth, async (req, res) => {
+  try {
+    const postData = await Post.update({
+      ...req.body,
+      user_id: req.session.user_id,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!postData) {
+      res.status(404).json({ message: 'No post found with this id!' });
+      return;
+    }
+
+    res.status(200).json(postData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/id', withAuth, async (req, res) => {
   try {
