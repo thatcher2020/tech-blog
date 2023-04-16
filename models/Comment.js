@@ -27,19 +27,18 @@ Comment.init(
         key: 'id'
       }
     },
-    comment: {
+    context: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: [1]
       }
     },
-    comment_date: {
-      type: DataTypes.DATE,
+    title: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: DataTypes.NOW
-    }
-  },
+    },
+  }, 
   {
     sequelize,
     freezeTableName: true,
