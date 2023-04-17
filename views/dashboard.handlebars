@@ -1,0 +1,63 @@
+<div class="container my-5">
+{{#each posts as |post|}}
+<div class="card my-3">
+      <div class="card-header">
+        <h4>
+          <a class="text-decoration-none" href="/comments/{{post.id}}">{{post.title}}</a>
+        </h4>
+        <p>Created by {{post.user.username}} on {{format_date post.date_created}}</p>
+      </div>
+      <div class="card-body">
+        <p>{{post.context}}</p>
+      </div>
+     
+      <div>
+      {{#each post.comments as |comment|}}
+      {{comment.title}}
+      
+      {{/each}}
+      </div>
+
+      <form action="/api/comments" method="post">
+      <fieldset>
+        <label for="">title</label>
+        <input type="text" name="title"/>
+      </fieldset>
+        <fieldset>
+        <label for="">Context</label>
+        <input type="text" name="context"/>
+      </fieldset>
+      <input type="hidden" name="user_id" value="{{id}}">
+      <input type="hidden" name="post_id" value="{{post.id}}">
+      <input type="submit" class="btn btn-primary" value="Add Comment">
+   
+
+      </form>
+
+
+       <form action="/api/posts/delete" method="get">
+      <input type="hidden" name="id" value="{{post.id}}">
+      <input type="submit" class="btn btn-danger" value="Delete Post"/>
+     
+      </form>
+     
+       
+</div>
+  {{/each}}
+</div>
+
+
+ 
+
+<form action="/api/posts" method="post">
+<fieldset>
+<label for="">Title</label>
+<input type="text" name="title">
+</fieldset>
+<fieldset>
+<label for="">Context</label>
+<input type="text" name="context">
+</fieldset>
+<input type="hidden" name="userid" value="{{id}}">
+<input type="submit" class="btn btn-primary" value="Add Post">
+</form>

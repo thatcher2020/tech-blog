@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { Post, User, Comment } = require("../../models");
 const withAuth = require ("../../utils/auth");
 
-router.get('/:id', withAuth, async (req, res) => {
+router.get(':id', withAuth, async (req, res) => {
   try {
     const postData = await Post.findAll({
       include: [
@@ -23,6 +23,8 @@ router.get('/:id', withAuth, async (req, res) => {
 
     const posts = postData.get({ plain: true });
 
+
+
     res.render('dashboard', {
       posts,
       logged_in: true,
@@ -33,13 +35,18 @@ router.get('/:id', withAuth, async (req, res) => {
 });
 
 router.post('/', withAuth, async (req, res) => {
+
+  console.log("check?", req.body)
+
+
   try {
     const postData = await Post.create({
       ...req.body,
       user_id: req.session.user_id,
     });
 
-    res.status(200).json(postData);
+    res.redirect("/dashboard");
+
   } catch (err) {
     res.status(400).json(err);
   }
@@ -68,11 +75,14 @@ router.put('/:id', withAuth, async (req, res) => {
   }
 });
 
-router.get('/id', withAuth, async (req, res) => {
+router.get('/delete', withAuth, async (req, res) => {
+
+  console.log("delete id", req.query.id)
+
   try {
-    const postData = await post.destroy({
+    const postData = await Post.destroy({
       where: {
-        id: req.params.id,
+        id: req.query.id,
         user_id: req.session.user_id,
       },
     });
@@ -82,10 +92,13 @@ router.get('/id', withAuth, async (req, res) => {
       return;
     }
 
-    res.status(200).json(postData);
+    res.redirect("/dashboard");
   } catch (err) {
     res.status(500).json(err);
   }
+
+
+
 });
 
 
