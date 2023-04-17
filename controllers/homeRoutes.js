@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Post, Comment, User } = require('../models');
 const withAuth = require ('../utils/auth');
 // get all posts for dashboard
-router.get('/dashboard', withAuth, async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
     const postData = await Post.findAll({
       include: [
